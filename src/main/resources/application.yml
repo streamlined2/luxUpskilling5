@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: jacksparrow
+    password: horriblesecret
+  security:
+    user:
+      name: user
+      password: $2a$10$lylAQt57JJBszeNu9CPb.eUBbyikDyPkYCRGCfVqTQQamL1UaJWoe
+  
