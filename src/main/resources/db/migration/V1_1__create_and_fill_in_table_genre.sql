@@ -10,18 +10,18 @@ CREATE TABLE IF NOT EXISTS movieland.genre
 
 ALTER TABLE movieland.genre OWNER to jacksparrow;
 
-INSERT INTO movieland.genre (name) VALUES('драма');
-INSERT INTO movieland.genre (name) VALUES('криминал');
-INSERT INTO movieland.genre (name) VALUES('фэнтези');
-INSERT INTO movieland.genre (name) VALUES('детектив');
-INSERT INTO movieland.genre (name) VALUES('мелодрама');
-INSERT INTO movieland.genre (name) VALUES('биография');
-INSERT INTO movieland.genre (name) VALUES('комедия');
-INSERT INTO movieland.genre (name) VALUES('фантастика');
-INSERT INTO movieland.genre (name) VALUES('боевик');
-INSERT INTO movieland.genre (name) VALUES('триллер');
-INSERT INTO movieland.genre (name) VALUES('приключения');
-INSERT INTO movieland.genre (name) VALUES('аниме');
-INSERT INTO movieland.genre (name) VALUES('мультфильм');
-INSERT INTO movieland.genre (name) VALUES('семейный');
-INSERT INTO movieland.genre (name) VALUES('вестерн');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(1, 'драма');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(2, 'криминал');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(3, 'фэнтези');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(4, 'детектив');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(5, 'мелодрама');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(6, 'биография');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(7, 'комедия');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(8, 'фантастика');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(9, 'боевик');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(10, 'триллер');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(11, 'приключения');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(12, 'аниме');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(13, 'мультфильм');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(14, 'семейный');
+INSERT INTO movieland.genre (id, name) OVERRIDING SYSTEM VALUE VALUES(15, 'вестерн');
