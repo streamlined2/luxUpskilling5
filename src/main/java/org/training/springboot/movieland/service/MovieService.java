@@ -14,6 +14,8 @@ public interface MovieService {
 
 	List<MoviePosterDto> findRandomMoviePoster(int count);
 
+	List<MoviePosterDto> getMoviePosterByGenre(Long genreId);
+
 	Optional<MovieDto> findById(Long id);
 
 	void save(MovieDto tagDto);

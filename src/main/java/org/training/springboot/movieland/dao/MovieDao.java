@@ -7,7 +7,8 @@ import org.training.springboot.movieland.model.Movie;
 
 public interface MovieDao extends Dao<Movie, Long> {
 
-	public List<MoviePosterDto> findAllMoviePoster();
-	public List<MoviePosterDto> findRandomMoviePoster(int count);
+	List<MoviePosterDto> findAllMoviePoster();
+	List<MoviePosterDto> findRandomMoviePoster(int count);
+	List<MoviePosterDto> findMoviePosterByGenre(Long genreId);
 
 }

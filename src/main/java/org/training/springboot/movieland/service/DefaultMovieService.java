@@ -35,6 +35,11 @@ public class DefaultMovieService implements MovieService {
 	}
 
 	@Override
+	public List<MoviePosterDto> getMoviePosterByGenre(Long genreId) {
+		return movieDao.findMoviePosterByGenre(genreId);
+	}
+
+	@Override
 	public Optional<MovieDto> findById(Long id) {
 		return movieDao.findById(id).map(movieMapper::toDto);
 	}

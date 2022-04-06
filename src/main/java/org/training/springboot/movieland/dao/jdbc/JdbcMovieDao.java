@@ -38,6 +38,9 @@ public class JdbcMovieDao implements MovieDao {
 	private static final String FIND_RANDOM_QUANTITY_MOVIES_STATEMENT = String.format(
 			"SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id ORDER BY RANDOM() LIMIT :count",
 			DB_SCHEMA_NAME, DB_SCHEMA_NAME);
+	private static final String FIND_ALL_MOVIES_BY_GENRE_STATEMENT = String.format(
+			"SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id JOIN %s.movie_genre mg ON m.id = mg.movie_id WHERE mg.genre_id = :genreId",
+			DB_SCHEMA_NAME, DB_SCHEMA_NAME, DB_SCHEMA_NAME);
 
 	private static final RowMapper<Movie> MOVIE_ROW_MAPPER = (resultSet, rowNum) -> Movie.builder()
 			.id(resultSet.getLong("id")).title(resultSet.getString("title")).issueYear(resultSet.getInt("issue_year"))
@@ -68,6 +71,12 @@ public class JdbcMovieDao implements MovieDao {
 	@Override
 	public List<MoviePosterDto> findRandomMoviePoster(int count) {
 		return jdbcTemplate.query(FIND_RANDOM_QUANTITY_MOVIES_STATEMENT, new MapSqlParameterSource("count", count),
+				MOVIE_POSTER_ROW_MAPPER);
+	}
+
+	@Override
+	public List<MoviePosterDto> findMoviePosterByGenre(Long genreId) {
+		return jdbcTemplate.query(FIND_ALL_MOVIES_BY_GENRE_STATEMENT, new MapSqlParameterSource("genreId", genreId),
 				MOVIE_POSTER_ROW_MAPPER);
 	}
 
