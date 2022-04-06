@@ -9,9 +9,9 @@ public interface Dao<E, K> {
 
 	Optional<E> findById(K id);
 
-	void save(E dto);
+	void save(E entity);
 
-	void save(K id, E dto);
+	void save(K id, E entity);
 
 	void deleteById(K id);
 

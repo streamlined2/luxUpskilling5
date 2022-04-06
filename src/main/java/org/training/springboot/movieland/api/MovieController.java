@@ -3,6 +3,7 @@ package org.training.springboot.movieland.api;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.training.springboot.movieland.dto.MoviePosterDto;
@@ -18,8 +19,13 @@ public class MovieController {
 	private final MovieService movieService;
 	
 	@GetMapping
-	public List<MoviePosterDto> getAll() {
+	public List<MoviePosterDto> getAllMoviePoster() {
 		return movieService.findAllMoviePoster();
+	}
+
+	@GetMapping("/random/{count}")
+	public List<MoviePosterDto> getRandomMoviePoster(@PathVariable int count) {
+		return movieService.findRandomMoviePoster(count);
 	}
 
 }

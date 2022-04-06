@@ -30,6 +30,11 @@ public class DefaultMovieService implements MovieService {
 	}
 
 	@Override
+	public List<MoviePosterDto> findRandomMoviePoster(int count) {
+		return movieDao.findRandomMoviePoster(count);
+	}
+
+	@Override
 	public Optional<MovieDto> findById(Long id) {
 		return movieDao.findById(id).map(movieMapper::toDto);
 	}
