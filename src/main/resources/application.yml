@@ -7,6 +7,9 @@ spring:
     user:
       name: user
       password: $2a$10$lylAQt57JJBszeNu9CPb.eUBbyikDyPkYCRGCfVqTQQamL1UaJWoe
+logging:
+  file:
+    name: movieland.log
 config:
   random:
     count: 3  
