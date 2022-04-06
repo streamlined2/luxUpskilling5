@@ -1,6 +1,7 @@
-package org.training.springboot.movieland.dto;
+package org.training.springboot.movieland.dto.mapper;
 
 import org.springframework.stereotype.Component;
+import org.training.springboot.movieland.dto.MovieDto;
 import org.training.springboot.movieland.model.Movie;
 
 @Component

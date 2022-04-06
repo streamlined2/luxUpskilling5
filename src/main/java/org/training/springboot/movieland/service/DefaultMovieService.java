@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.training.springboot.movieland.dao.JdbcMovieDao;
+import org.training.springboot.movieland.dao.jdbc.JdbcMovieDao;
 import org.training.springboot.movieland.dto.MovieDto;
-import org.training.springboot.movieland.dto.MovieMapper;
+import org.training.springboot.movieland.dto.MoviePosterDto;
+import org.training.springboot.movieland.dto.mapper.MovieMapper;
 import org.training.springboot.movieland.model.Movie;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class DefaultMovieService implements MovieService {
 	@Override
 	public List<MovieDto> findAll() {
 		return movieDao.findAll().stream().map(movieMapper::toDto).toList();
+	}
+
+	@Override
+	public List<MoviePosterDto> findAllMoviePoster() {
+		return movieDao.findAllMoviePoster();
 	}
 
 	@Override

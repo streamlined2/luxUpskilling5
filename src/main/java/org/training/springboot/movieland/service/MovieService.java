@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.training.springboot.movieland.dto.MovieDto;
+import org.training.springboot.movieland.dto.MoviePosterDto;
 
 public interface MovieService {
 
 	List<MovieDto> findAll();
+
+	List<MoviePosterDto> findAllMoviePoster();
 
 	Optional<MovieDto> findById(Long id);
 
