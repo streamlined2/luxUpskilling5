@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.training.springboot.movieland.dto.MovieDto;
 import org.training.springboot.movieland.dto.MoviePosterDto;
 
-public interface MovieService {
-
-	List<MovieDto> findAll();
+public interface MovieService extends BasicCacheableService<MovieDto> {
 
 	List<MoviePosterDto> findAllMoviePoster();
 
@@ -18,9 +16,9 @@ public interface MovieService {
 
 	Optional<MovieDto> findById(Long id);
 
-	void save(MovieDto tagDto);
+	void save(MovieDto dto);
 
-	void save(Long id, MovieDto tagDto);
+	void save(Long id, MovieDto dto);
 
 	void deleteById(Long id);
 

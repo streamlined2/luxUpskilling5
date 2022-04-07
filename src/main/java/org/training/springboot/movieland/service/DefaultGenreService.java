@@ -11,7 +11,7 @@ import org.training.springboot.movieland.model.Genre;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Service
+@Service("defaultGenreService")
 public class DefaultGenreService implements GenreService {
 
 	private final JdbcGenreDao genreDao;

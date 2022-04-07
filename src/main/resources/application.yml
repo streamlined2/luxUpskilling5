@@ -10,6 +10,5 @@ spring:
 logging:
   file:
     name: movieland.log
-config:
-  random:
-    count: 3  
+config.random.count: 3
+config.cache.refreshment.period: 4
