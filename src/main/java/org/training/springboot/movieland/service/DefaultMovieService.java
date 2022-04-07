@@ -1,6 +1,7 @@
 package org.training.springboot.movieland.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class DefaultMovieService implements MovieService {
-	
+
 	private final JdbcMovieDao movieDao;
 	private final MovieMapper movieMapper;
 
@@ -25,8 +26,8 @@ public class DefaultMovieService implements MovieService {
 	}
 
 	@Override
-	public List<MoviePosterDto> findAllMoviePoster() {
-		return movieDao.findAllMoviePoster();
+	public List<MoviePosterDto> findAllMoviePoster(Map<String, String> sortParameters) {
+		return movieDao.findAllMoviePoster(sortParameters);
 	}
 
 	@Override
@@ -35,8 +36,8 @@ public class DefaultMovieService implements MovieService {
 	}
 
 	@Override
-	public List<MoviePosterDto> getMoviePosterByGenre(Long genreId) {
-		return movieDao.findMoviePosterByGenre(genreId);
+	public List<MoviePosterDto> getMoviePosterByGenre(Long genreId, Map<String, String> sortParameters) {
+		return movieDao.findMoviePosterByGenre(genreId, sortParameters);
 	}
 
 	@Override

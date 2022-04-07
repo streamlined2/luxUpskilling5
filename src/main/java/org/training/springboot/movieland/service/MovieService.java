@@ -1,6 +1,7 @@
 package org.training.springboot.movieland.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.training.springboot.movieland.dto.MovieDto;
@@ -8,11 +9,11 @@ import org.training.springboot.movieland.dto.MoviePosterDto;
 
 public interface MovieService extends BasicCacheableService<MovieDto> {
 
-	List<MoviePosterDto> findAllMoviePoster();
+	List<MoviePosterDto> findAllMoviePoster(Map<String, String> sortParameters);
 
 	List<MoviePosterDto> findRandomMoviePoster(int count);
 
-	List<MoviePosterDto> getMoviePosterByGenre(Long genreId);
+	List<MoviePosterDto> getMoviePosterByGenre(Long genreId, Map<String, String> sortParameters);
 
 	Optional<MovieDto> findById(Long id);
 

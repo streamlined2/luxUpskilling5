@@ -32,8 +32,11 @@ public class JdbcGenreDao implements GenreDao {
 	private static final String DELETE_GENRE_STATEMENT = String.format("DELETE FROM %s.genre WHERE id = :id",
 			DB_SCHEMA_NAME);
 
+	private static final String NAME_FIELD = "name";
+	private static final String ID_FIELD = "id";
+
 	private static final RowMapper<Genre> GENRE_ROW_MAPPER = (resultSet, rowNum) -> Genre.builder()
-			.id(resultSet.getLong("id")).name(resultSet.getString("name")).build();
+			.id(resultSet.getLong(ID_FIELD)).name(resultSet.getString(NAME_FIELD)).build();
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -49,14 +52,14 @@ public class JdbcGenreDao implements GenreDao {
 
 	@Override
 	public Optional<Genre> findById(Long id) {
-		return jdbcTemplate.query(FIND_GENRE_STATEMENT, new MapSqlParameterSource("id", id), GENRE_ROW_MAPPER).stream()
+		return jdbcTemplate.query(FIND_GENRE_STATEMENT, new MapSqlParameterSource(ID_FIELD, id), GENRE_ROW_MAPPER).stream()
 				.findFirst();
 	}
 
 	@Override
 	public void save(Genre genre) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-		parameterSource.addValue("name", genre.getName());
+		parameterSource.addValue(NAME_FIELD, genre.getName());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_GENRE_STATEMENT, parameterSource, keyHolder);
 		genre.setId(keyHolder.getKeyAs(Long.class));
@@ -65,14 +68,14 @@ public class JdbcGenreDao implements GenreDao {
 	@Override
 	public void save(Long id, Genre genre) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-		parameterSource.addValue("id", id);
+		parameterSource.addValue(ID_FIELD, id);
 		parameterSource.addValue("title", genre.getName());
 		jdbcTemplate.update(UPDATE_GENRE_STATEMENT, parameterSource);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		jdbcTemplate.update(DELETE_GENRE_STATEMENT, new MapSqlParameterSource("id", id));
+		jdbcTemplate.update(DELETE_GENRE_STATEMENT, new MapSqlParameterSource(ID_FIELD, id));
 	}
 
 }
