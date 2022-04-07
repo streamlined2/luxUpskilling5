@@ -17,8 +17,8 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class Review {
 	
-	private Movie movie;
-	private User user;
+	private Long movieId;
+	private Long userId;
 	private LocalDateTime postTime;
 	private String text;
 

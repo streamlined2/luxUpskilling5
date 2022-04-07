@@ -11,7 +11,7 @@ public class GenreMapper {
 		return new GenreDto(genre.getId(), genre.getName());
 	}
 
-	public Genre toMovie(GenreDto dto) {
+	public Genre toGenre(GenreDto dto) {
 		return Genre.builder().id(dto.id()).name(dto.name()).build();
 	}
 

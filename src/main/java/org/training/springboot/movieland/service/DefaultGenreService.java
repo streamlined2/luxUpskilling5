@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.training.springboot.movieland.dao.jdbc.JdbcGenreDao;
+import org.training.springboot.movieland.dao.GenreDao;
 import org.training.springboot.movieland.dto.GenreDto;
 import org.training.springboot.movieland.dto.mapper.GenreMapper;
 import org.training.springboot.movieland.model.Genre;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service("defaultGenreService")
 public class DefaultGenreService implements GenreService {
 
-	private final JdbcGenreDao genreDao;
+	private final GenreDao genreDao;
 	private final GenreMapper genreMapper;
 
 	@Override
@@ -29,12 +29,12 @@ public class DefaultGenreService implements GenreService {
 
 	@Override
 	public void save(GenreDto genreDto) {
-		genreDao.save(genreMapper.toMovie(genreDto));		
+		genreDao.save(genreMapper.toGenre(genreDto));		
 	}
 
 	@Override
 	public void save(Long id, GenreDto genreDto) {
-		Genre genre = genreMapper.toMovie(genreDto);
+		Genre genre = genreMapper.toGenre(genreDto);
 		genre.setId(id);
 		genreDao.save(genre);
 	}
@@ -42,6 +42,11 @@ public class DefaultGenreService implements GenreService {
 	@Override
 	public void deleteById(Long id) {
 		genreDao.deleteById(id);
+	}
+
+	@Override
+	public List<GenreDto> getMovieGenresById(Long movieId) {
+		return genreDao.getMovieGenresById(movieId);
 	}
 
 }

@@ -2,12 +2,15 @@ package org.training.springboot.movieland.api;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.training.springboot.movieland.dto.MovieDetailsDto;
 import org.training.springboot.movieland.dto.MoviePosterDto;
 import org.training.springboot.movieland.service.MovieService;
 
@@ -34,6 +37,11 @@ public class MovieController {
 	public List<MoviePosterDto> getMoviePosterByGenre(@PathVariable Long genreId,
 			@RequestParam Map<String, String> sortParameters) {
 		return movieService.getMoviePosterByGenre(genreId, sortParameters);
+	}
+	
+	@GetMapping("/{movieId}")
+	public Optional<MovieDetailsDto> getMovieDetailsById(@PathVariable Long movieId){
+		return movieService.getMovieDetailsById(movieId);
 	}
 
 }

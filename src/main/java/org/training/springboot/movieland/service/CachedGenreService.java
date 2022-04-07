@@ -13,12 +13,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.training.springboot.movieland.dto.GenreDto;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Primary
 @Service("cachedGenreService")
 public class CachedGenreService implements GenreService {
 
@@ -129,6 +131,11 @@ public class CachedGenreService implements GenreService {
 		} finally {
 			semaphore.release();
 		}
+	}
+
+	@Override
+	public List<GenreDto> getMovieGenresById(Long movieId) {
+		return delegateService.getMovieGenresById(movieId);
 	}
 
 }

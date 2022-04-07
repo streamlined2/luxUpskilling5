@@ -1,13 +1,13 @@
 package org.training.springboot.movieland.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.training.springboot.movieland.dto.GenreDto;
 
 public interface GenreService extends BasicCacheableService<GenreDto> {
 
-	Optional<GenreDto> findById(Long id);
-
+	List<GenreDto> getMovieGenresById(Long movieId);
+	
 	void save(GenreDto dto);
 
 	void save(Long id, GenreDto dto);

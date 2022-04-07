@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.training.springboot.movieland.dto.MovieDetailsDto;
 import org.training.springboot.movieland.dto.MovieDto;
 import org.training.springboot.movieland.dto.MoviePosterDto;
 
@@ -15,7 +16,7 @@ public interface MovieService extends BasicCacheableService<MovieDto> {
 
 	List<MoviePosterDto> getMoviePosterByGenre(Long genreId, Map<String, String> sortParameters);
 
-	Optional<MovieDto> findById(Long id);
+	Optional<MovieDetailsDto> getMovieDetailsById(Long movieId);
 
 	void save(MovieDto dto);
 

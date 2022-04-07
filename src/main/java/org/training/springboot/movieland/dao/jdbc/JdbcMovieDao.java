@@ -36,12 +36,22 @@ public class JdbcMovieDao implements MovieDao {
 			DB_SCHEMA_NAME);
 	private static final String DELETE_MOVIE_STATEMENT = String.format("DELETE FROM %s.movie WHERE id = :id",
 			DB_SCHEMA_NAME);
-	private static final String FIND_RANDOM_QUANTITY_MOVIES_STATEMENT = String.format(
-			"SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id ORDER BY RANDOM() LIMIT :count",
-			DB_SCHEMA_NAME, DB_SCHEMA_NAME);
-	private static final String FIND_ALL_MOVIES_BY_GENRE_STATEMENT = String.format(
-			"SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id JOIN %s.movie_genre mg ON m.id = mg.movie_id WHERE mg.genre_id = :genreId",
-			DB_SCHEMA_NAME, DB_SCHEMA_NAME, DB_SCHEMA_NAME);
+	private static final String FIND_RANDOM_QUANTITY_MOVIES_STATEMENT = String.format("""
+					SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link
+					FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id
+					ORDER BY RANDOM() LIMIT :count
+			""", DB_SCHEMA_NAME, DB_SCHEMA_NAME);
+	private static final String FIND_ALL_MOVIES_BY_GENRE_STATEMENT = String.format("""
+					SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link
+					FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id
+							JOIN %s.movie_genre mg ON m.id = mg.movie_id
+					WHERE mg.genre_id = :genreId
+			""", DB_SCHEMA_NAME, DB_SCHEMA_NAME, DB_SCHEMA_NAME);
+	private static final String FIND_MOVIE_POSTER_STATEMENT = String.format("""
+					SELECT m.id, m.title, m.issue_year, m.plot, m.rating, m.price, p.link
+					FROM %s.movie m LEFT JOIN %s.poster p ON m.id = p.movie_id
+					WHERE m.id = :id
+			""", DB_SCHEMA_NAME, DB_SCHEMA_NAME);
 
 	private static final String LINK_FIELD = "link";
 	private static final String PLOT_FIELD = "plot";
@@ -50,17 +60,17 @@ public class JdbcMovieDao implements MovieDao {
 	private static final String ID_FIELD = "id";
 	private static final String PRICE_FIELD = "price";
 	private static final String RATING_FIELD = "rating";
-	
-	private static final List<String> orderFields = List.of(RATING_FIELD, PRICE_FIELD);
+
+	private static final List<String> ORDER_FIELDS = List.of(RATING_FIELD, PRICE_FIELD);
 
 	private static final RowMapper<Movie> MOVIE_ROW_MAPPER = (resultSet, rowNum) -> Movie.builder()
-			.id(resultSet.getLong(ID_FIELD)).title(resultSet.getString(TITLE_FIELD)).issueYear(resultSet.getInt(ISSUE_YEAR_FIELD))
-			.plot(resultSet.getString(PLOT_FIELD)).rating(resultSet.getBigDecimal(RATING_FIELD))
-			.price(resultSet.getBigDecimal(PRICE_FIELD)).build();
-	private static final RowMapper<MoviePosterDto> MOVIE_POSTER_ROW_MAPPER = (resultSet, rowNum) -> new MoviePosterDto(
+			.id(resultSet.getLong(ID_FIELD)).title(resultSet.getString(TITLE_FIELD))
+			.issueYear(resultSet.getInt(ISSUE_YEAR_FIELD)).plot(resultSet.getString(PLOT_FIELD))
+			.rating(resultSet.getBigDecimal(RATING_FIELD)).price(resultSet.getBigDecimal(PRICE_FIELD)).build();
+	private static final RowMapper<MoviePosterDto> MOVIE_POSTER_DTO_MAPPER = (resultSet, rowNum) -> new MoviePosterDto(
 			resultSet.getLong(ID_FIELD), resultSet.getString(TITLE_FIELD), resultSet.getInt(ISSUE_YEAR_FIELD),
-			resultSet.getString(PLOT_FIELD), resultSet.getBigDecimal(RATING_FIELD), resultSet.getBigDecimal(PRICE_FIELD),
-			resultSet.getString(LINK_FIELD));
+			resultSet.getString(PLOT_FIELD), resultSet.getBigDecimal(RATING_FIELD),
+			resultSet.getBigDecimal(PRICE_FIELD), resultSet.getString(LINK_FIELD));
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -77,7 +87,7 @@ public class JdbcMovieDao implements MovieDao {
 	@Override
 	public List<MoviePosterDto> findAllMoviePoster(Map<String, String> sortParameters) {
 		return jdbcTemplate.query(String.format("%s %s", FIND_ALL_MOVIES_STATEMENT, getOrderClause(sortParameters)),
-				Map.of(), MOVIE_POSTER_ROW_MAPPER);
+				Map.of(), MOVIE_POSTER_DTO_MAPPER);
 	}
 
 	private String getOrderClause(Map<String, String> sortParameters) {
@@ -90,43 +100,43 @@ public class JdbcMovieDao implements MovieDao {
 			}
 		}
 		if (count > 0) {
-			b.deleteCharAt(b.length()-1);
+			b.deleteCharAt(b.length() - 1);
 			return b.toString();
 		}
 		return "";
 	}
 
 	private boolean isCorrectSortParameter(Entry<String, String> entry) {
-		return orderFields.contains(entry.getKey()) && Order.findByLabel(entry.getValue()).isPresent();
+		return ORDER_FIELDS.contains(entry.getKey()) && Order.findByLabel(entry.getValue()).isPresent();
 	}
 
 	@Override
 	public List<MoviePosterDto> findRandomMoviePoster(int count) {
 		return jdbcTemplate.query(FIND_RANDOM_QUANTITY_MOVIES_STATEMENT, new MapSqlParameterSource("count", count),
-				MOVIE_POSTER_ROW_MAPPER);
+				MOVIE_POSTER_DTO_MAPPER);
 	}
 
 	@Override
 	public List<MoviePosterDto> findMoviePosterByGenre(Long genreId, Map<String, String> sortParameters) {
 		return jdbcTemplate.query(
 				String.format("%s %s", FIND_ALL_MOVIES_BY_GENRE_STATEMENT, getOrderClause(sortParameters)),
-				new MapSqlParameterSource("genreId", genreId), MOVIE_POSTER_ROW_MAPPER);
+				new MapSqlParameterSource("genreId", genreId), MOVIE_POSTER_DTO_MAPPER);
 	}
 
 	@Override
 	public Optional<Movie> findById(Long id) {
-		return jdbcTemplate.query(FIND_MOVIE_STATEMENT, new MapSqlParameterSource(ID_FIELD, id), MOVIE_ROW_MAPPER).stream()
+		return jdbcTemplate.query(FIND_MOVIE_STATEMENT, new MapSqlParameterSource("id", id), MOVIE_ROW_MAPPER).stream()
 				.findFirst();
 	}
 
 	@Override
 	public void save(Movie movie) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-		parameterSource.addValue(TITLE_FIELD, movie.getTitle());
+		parameterSource.addValue("title", movie.getTitle());
 		parameterSource.addValue("issueYear", movie.getIssueYear());
-		parameterSource.addValue(PLOT_FIELD, movie.getPlot());
-		parameterSource.addValue(RATING_FIELD, movie.getRating());
-		parameterSource.addValue(PRICE_FIELD, movie.getPrice());
+		parameterSource.addValue("plot", movie.getPlot());
+		parameterSource.addValue("rating", movie.getRating());
+		parameterSource.addValue("price", movie.getPrice());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_MOVIE_STATEMENT, parameterSource, keyHolder);
 		movie.setId(keyHolder.getKeyAs(Long.class));
@@ -135,18 +145,25 @@ public class JdbcMovieDao implements MovieDao {
 	@Override
 	public void save(Long id, Movie movie) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-		parameterSource.addValue(ID_FIELD, id);
-		parameterSource.addValue(TITLE_FIELD, movie.getTitle());
+		parameterSource.addValue("id", id);
+		parameterSource.addValue("title", movie.getTitle());
 		parameterSource.addValue("issueYear", movie.getIssueYear());
-		parameterSource.addValue(PLOT_FIELD, movie.getPlot());
-		parameterSource.addValue(RATING_FIELD, movie.getRating());
-		parameterSource.addValue(PRICE_FIELD, movie.getPrice());
+		parameterSource.addValue("plot", movie.getPlot());
+		parameterSource.addValue("rating", movie.getRating());
+		parameterSource.addValue("price", movie.getPrice());
 		jdbcTemplate.update(UPDATE_MOVIE_STATEMENT, parameterSource);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		jdbcTemplate.update(DELETE_MOVIE_STATEMENT, new MapSqlParameterSource(ID_FIELD, id));
+		jdbcTemplate.update(DELETE_MOVIE_STATEMENT, new MapSqlParameterSource("id", id));
+	}
+
+	@Override
+	public Optional<MoviePosterDto> getMoviePosterById(Long movieId) {
+		return jdbcTemplate
+				.query(FIND_MOVIE_POSTER_STATEMENT, new MapSqlParameterSource("id", movieId), MOVIE_POSTER_DTO_MAPPER)
+				.stream().findFirst();
 	}
 
 }
