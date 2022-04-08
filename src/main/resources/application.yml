@@ -12,3 +12,4 @@ logging:
     name: movieland.log
 config.random.count: 3
 config.cache.refreshment.period: 4
+config.quote.refreshment.period: 1

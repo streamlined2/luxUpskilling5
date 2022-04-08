@@ -1,8 +1,9 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.genre;
 
 import java.util.List;
 
 import org.training.springboot.movieland.dto.GenreDto;
+import org.training.springboot.movieland.service.BasicCacheableService;
 
 public interface GenreService extends BasicCacheableService<GenreDto> {
 

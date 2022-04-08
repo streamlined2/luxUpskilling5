@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.training.springboot.movieland.dto.MovieDetailsDto;
 import org.training.springboot.movieland.dto.MoviePosterDto;
-import org.training.springboot.movieland.service.MovieService;
+import org.training.springboot.movieland.service.movie.MovieService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,8 +40,8 @@ public class MovieController {
 	}
 	
 	@GetMapping("/{movieId}")
-	public Optional<MovieDetailsDto> getMovieDetailsById(@PathVariable Long movieId){
-		return movieService.getMovieDetailsById(movieId);
+	public Optional<MovieDetailsDto> getMovieDetailsById(@PathVariable Long movieId, @RequestParam Optional<String> currency){
+		return movieService.getMovieDetailsById(movieId, currency);
 	}
 
 }

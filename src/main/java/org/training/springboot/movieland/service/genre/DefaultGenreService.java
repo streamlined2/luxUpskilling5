@@ -1,4 +1,4 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.genre;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.training.springboot.movieland.dao.GenreDao;
 import org.training.springboot.movieland.dto.GenreDto;
 import org.training.springboot.movieland.dto.mapper.GenreMapper;
 import org.training.springboot.movieland.model.Genre;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

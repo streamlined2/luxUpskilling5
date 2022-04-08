@@ -1,4 +1,4 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.country;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.training.springboot.movieland.dao.CountryDao;
 import org.training.springboot.movieland.dto.CountryDto;
 import org.training.springboot.movieland.dto.mapper.CountryMapper;
 import org.training.springboot.movieland.model.Country;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

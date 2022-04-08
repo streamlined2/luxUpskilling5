@@ -1,4 +1,4 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.training.springboot.movieland.dto.GenreDto;
+import org.training.springboot.movieland.service.CacheModificationException;
 
 import lombok.extern.slf4j.Slf4j;
 

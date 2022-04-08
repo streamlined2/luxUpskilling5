@@ -1,8 +1,9 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.review;
 
 import java.util.List;
 
 import org.training.springboot.movieland.dto.ReviewDto;
+import org.training.springboot.movieland.service.BasicCacheableService;
 
 public interface ReviewService extends BasicCacheableService<ReviewDto> {
 

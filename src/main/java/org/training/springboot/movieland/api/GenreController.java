@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.training.springboot.movieland.dto.GenreDto;
-import org.training.springboot.movieland.service.GenreService;
+import org.training.springboot.movieland.service.genre.GenreService;
 
 @RestController
 @RequestMapping("api/v1/genre")

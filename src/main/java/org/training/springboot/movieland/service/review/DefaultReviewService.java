@@ -1,4 +1,4 @@
-package org.training.springboot.movieland.service;
+package org.training.springboot.movieland.service.review;
 
 import java.util.List;
 import java.util.Optional;
